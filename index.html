@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HUY PHAM HUB — Key Generator</title>
+<style>
+:root{color-scheme:dark;--bg:#080a0d;--panel:#101318;--line:#2b3038;--muted:#a6afbb;--white:#f5f7fa}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% 0,#202630 0,#0b0e12 48%,#050607 100%);font-family:Inter,Segoe UI,Arial,sans-serif;color:var(--white);display:grid;place-items:center;padding:22px}
+.wrap{width:min(100%,760px)}.brand{display:flex;align-items:center;gap:14px;margin-bottom:18px}.crown{width:54px;height:54px;border:1px solid #505762;border-radius:16px;display:grid;place-items:center;font-size:29px;background:#12161c}.brand h1{font-size:22px;letter-spacing:1.5px;margin:0}.brand p{color:var(--muted);margin:5px 0 0;font-size:13px}
+.card{background:linear-gradient(145deg,rgba(20,24,30,.98),rgba(9,11,14,.98));border:1px solid var(--line);border-radius:22px;padding:clamp(20px,5vw,36px);box-shadow:0 25px 80px #0009}.eyebrow{font-size:11px;letter-spacing:2px;color:#b9c1cb;text-transform:uppercase}.title{font-size:clamp(25px,5vw,34px);margin:9px 0}.desc{color:var(--muted);line-height:1.6;margin:0 0 26px}
+label{display:block;font-size:13px;color:#d6dbe2;margin:18px 0 8px}input,select{width:100%;background:#080a0d;border:1px solid #3a414c;border-radius:11px;padding:14px;color:#fff;font-size:15px;outline:none}input:focus,select:focus{border-color:#dfe5ed}button{border:0;border-radius:11px;padding:14px 16px;font-size:14px;font-weight:750;cursor:pointer;transition:transform .15s,opacity .15s}button:active{transform:scale(.99)}.primary{width:100%;background:linear-gradient(#fff,#dfe4ea);color:#090b0e;margin-top:23px}.secondary{background:#171b21;border:1px solid #363d47;color:#f6f7f9}.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}.result{margin-top:22px;border:1px solid #3a414c;background:#080a0d;border-radius:14px;padding:16px;display:none}.result.show{display:block}.resulthead{display:flex;justify-content:space-between;align-items:center;gap:10px}.status{font-size:11px;letter-spacing:1px;color:#b9c4d1}.key{font:700 clamp(16px,3.7vw,22px) ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:1px;overflow-wrap:anywhere;margin:18px 0}.meta{color:var(--muted);font-size:12px;line-height:1.8}.actions{display:flex;gap:10px}.actions button{flex:1}.notice{font-size:12px;color:#aeb7c2;line-height:1.7;margin-top:22px;padding-top:17px;border-top:1px solid #282d35}.toast{color:#e8edf3;min-height:20px;font-size:12px;margin-top:12px}
+@media(max-width:520px){.row{grid-template-columns:1fr}.brand h1{font-size:18px}.actions{flex-direction:column}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header class="brand"><div class="crown">♛</div><div><h1>HUY PHAM HUB</h1><p>Key Generator · Blox Fruits Script</p></div></header>
+  <section class="card">
+    <div class="eyebrow">Access management</div>
+    <h2 class="title">Tạo Key mới</h2>
+    <p class="desc">Tạo mã Key ngẫu nhiên và đặt thời hạn sử dụng. Giao diện này chạy trực tiếp trên trình duyệt.</p>
+    <div class="row">
+      <div><label for="prefix">Tiền tố Key</label><input id="prefix" maxlength="16" value="HUYPHAM" autocomplete="off"></div>
+      <div><label for="duration">Thời hạn</label><select id="duration"><option value="24">24 giờ</option><option value="12">12 giờ</option><option value="72">3 ngày</option><option value="168">7 ngày</option><option value="720">30 ngày</option></select></div>
+    </div>
+    <label for="count">Số lượng Key</label><select id="count"><option value="1">1 Key</option><option value="5">5 Key</option><option value="10">10 Key</option></select>
+    <button class="primary" id="generate">✦ TẠO KEY</button>
+    <div class="result" id="result">
+      <div class="resulthead"><span class="status">KEY ĐÃ TẠO</span><button class="secondary" id="copyAll">Sao chép tất cả</button></div>
+      <div id="keys"></div>
+      <div class="meta" id="expiry"></div>
+      <div class="toast" id="toast" aria-live="polite"></div>
+    </div>
+    <div class="notice"><b>Lưu ý bảo mật:</b> Trang HTML này chỉ tạo mã ngẫu nhiên ở phía trình duyệt. Nó không tự xác minh Key, không lưu danh sách Key trên máy chủ và không thể ngăn người khác tự tạo mã. Muốn Key có hiệu lực thật và hết hạn sau 24 giờ, cần kết nối API/backend để lưu và xác minh Key.</div>
+  </section>
+</main>
+<script>
+const $ = id => document.getElementById(id);
+let generated = [];
+function randomPart(n=4){
+  const chars='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  const bytes=new Uint8Array(n);
+  crypto.getRandomValues(bytes);
+  return Array.from(bytes,b=>chars[b%chars.length]).join('');
+}
+function makeKey(prefix){
+  return `${prefix}-${randomPart()}-${randomPart()}-${randomPart()}`;
+}
+$('generate').addEventListener('click',()=>{
+  const prefix=$('prefix').value.trim().toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,16)||'HUYPHAM';
+  const count=Number($('count').value);
+  const hours=Number($('duration').value);
+  const now=Date.now();
+  generated=Array.from({length:count},()=>({key:makeKey(prefix),created:now,expires:now+hours*3600000,hours}));
+  $('keys').innerHTML=generated.map((item,i)=>`<div class="key">${i+1}. ${item.key}</div>`).join('');
+  const exp=new Date(now+hours*3600000);
+  $('expiry').textContent=`Thời hạn: ${hours} giờ · Hết hạn dự kiến: ${exp.toLocaleString('vi-VN')}`;
+  $('result').classList.add('show');
+  $('toast').textContent='Đã tạo mã trong phiên trình duyệt này.';
+});
+$('copyAll').addEventListener('click',async()=>{
+  if(!generated.length)return;
+  const content=generated.map(x=>x.key).join('\n');
+  try{await navigator.clipboard.writeText(content);$('toast').textContent='Đã sao chép Key.';}
+  catch(e){const area=document.createElement('textarea');area.value=content;document.body.appendChild(area);area.select();const ok=document.execCommand('copy');area.remove();$('toast').textContent=ok?'Đã sao chép Key.':'Không sao chép tự động được; hãy chọn và sao chép mã.';}
+});
+</script>
+</body>
+</html>
