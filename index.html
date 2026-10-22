@@ -1,36 +1,270 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Huy Pham Hub - Key</title>
-<style>
-:root{
-  --ink:#0a0b0d;--panel:#111317;--raise:#171a1f;--line:#2a2f37;--line-hi:#4a525e;
-  --text:#f2f4f7;--muted:#98a1ad;--ok:#7ee2a3;--bad:#ff7a7a;--warn:#f0c674;
-  --mono:ui-monospace,"Cascadia Mono","SF Mono",Consolas,monospace;
-  --sans:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
-}
-*{box-sizing:border-box}
-html{color-scheme:dark}
-body{margin:0;min-height:100dvh;display:grid;place-items:center;padding:24px 16px;background:var(--ink);color:var(--text);font:15px/1.5 var(--sans)}
-.wrap{width:min(100%,520px)}
-.brand{margin:0 0 18px 4px;font-size:14px;font-weight:700;letter-spacing:.14em}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:28px}
-.tabs{display:flex;gap:4px;margin:0 0 24px;padding:4px;border:1px solid var(--line);border-radius:12px;background:var(--ink)}
-.tabs a{flex:1;display:flex;align-items:center;justify-content:center;min-height:40px;border-radius:8px;color:var(--muted);font-weight:600;font-size:14px;text-decoration:none}
-.tabs a:hover{color:var(--text)}
-.tabs a[aria-current=page]{background:var(--text);color:var(--ink)}
-h1{margin:0 0 4px;font-size:22px;font-weight:650;line-height:1.25}
-.sub{margin:0 0 20px;color:var(--muted);font-size:13.5px}
-ol{margin:0 0 20px;padding-left:20px}
-li{margin:0 0 8px;padding-left:4px}
-li::marker{color:var(--muted)}
-label{display:block;margin:0 0 8px;font-size:13px;color:var(--muted)}
-.gap{margin-top:16px}
-input,select{width:100%;min-width:0;padding:14px;border-radius:10px;border:1px solid var(--line-hi);background:var(--ink);color:var(--text);font:15px var(--sans)}
-.keyin{font:600 16px var(--mono);letter-spacing:.04em;text-transform:uppercase}
-.keyin::placeholder{color:#59616d;text-transform:none;letter-spacing:0;font-weight:400}
-.field{display:flex;gap:8px}
-.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-button,.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 16px;border-radius:10px;border:1px solid var(--line-hi);background:var(--raise);color:var(--text);font:600 14px var(--sans);cursor:pointer;text-decoration:none}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Huy Pham Hub - Key System</title>
+    <style>
+        :root {
+            --bg: #050507;
+            --panel: #0d0d11;
+            --border: #1f1f26;
+            --text: #f5f5f7;
+            --muted: #8a8a96;
+            --accent: #ffffff;
+            --green: #78eb9f;
+            --red: #ff6b6b;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+        .container {
+            width: 100%;
+            max-width: 420px;
+            padding: 2rem;
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            position: relative;
+        }
+        .logo {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+        }
+        .logo span { color: var(--muted); font-weight: 400; font-size: 0.9rem; }
+        
+        .input-group { margin-bottom: 1.5rem; }
+        label { display: block; font-size: 0.85rem; color: var(--muted); margin-bottom: 0.5rem; }
+        input {
+            width: 100%;
+            padding: 12px 16px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 0.95rem;
+            outline: none;
+            transition: 0.2s;
+        }
+        input:focus { border-color: var(--accent); }
+        
+        button {
+            width: 100%;
+            padding: 12px;
+            background: var(--accent);
+            color: #000;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        button:hover { opacity: 0.9; transform: translateY(-1px); }
+        button.secondary { background: transparent; border: 1px solid var(--border); color: var(--muted); margin-top: 1rem; }
+        button.secondary:hover { border-color: var(--accent); color: var(--text); }
+
+        .status {
+            margin-top: 1rem;
+            font-size: 0.85rem;
+            text-align: center;
+            min-height: 20px;
+        }
+        .status.error { color: var(--red); }
+        .status.success { color: var(--green); }
+
+        /* Admin Panel Hidden */
+        #admin-panel { display: none; margin-top: 2rem; border-top: 1px solid var(--border); padding-top: 2rem; }
+        .key-list {
+            margin-top: 1rem;
+            max-height: 200px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 0.8rem;
+            color: var(--muted);
+        }
+        .key-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px;
+            border-bottom: 1px solid var(--border);
+        }
+        .key-item.active { color: var(--green); }
+        .key-item.used { color: var(--red); text-decoration: line-through; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="logo">
+            <h1>HUY PHAM HUB</h1>
+            <span>Key Verification System</span>
+        </div>
+
+        <div id="login-view">
+            <div class="input-group">
+                <label>Enter Access Key</label>
+                <input type="text" id="key-input" placeholder="XXXX-XXXX-XXXX-XXXX">
+            </div>
+            <button onclick="verifyKey()">Verify & Enter</button>
+            <div id="status-msg" class="status"></div>
+            
+            <button class="secondary" onclick="toggleAdmin()">Admin Access</button>
+        </div>
+
+        <div id="admin-panel">
+            <div class="logo">
+                <h1>Admin Panel</h1>
+                <span>Generate & Manage Keys</span>
+            </div>
+            <div class="input-group">
+                <label>Admin Password</label>
+                <input type="password" id="admin-pass" placeholder="••••••">
+            </div>
+            <button onclick="loginAdmin()">Login</button>
+            
+            <div id="admin-controls" style="display:none;">
+                <div class="input-group" style="margin-top: 1.5rem;">
+                    <label>Generate New Key</label>
+                    <button onclick="generateKey()" style="background: var(--green); color: #000;">Create Key</button>
+                </div>
+                <div class="key-list" id="key-database">
+                    <!-- Keys will load here -->
+                </div>
+                <button class="secondary" onclick="saveToGithub()">Force Save to DB</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // CONFIGURATION
+        const REPO_URL = "https://raw.githubusercontent.com/realmakehub-cell/toi-vo-toi/main/keys.json"; 
+        // Bạn cần tạo repo github public tên là 'toi-vo-toi' và file 'keys.json' với nội dung: []
+        
+        let keysDB = [];
+        const ADMIN_PASS = "huypham123"; // Đổi password admin ở đây
+
+        // Load keys from Github on start
+        async function loadKeys() {
+            try {
+                const res = await fetch(REPO_URL + '?t=' + new Date().getTime());
+                keysDB = await res.json();
+                renderKeys();
+            } catch (e) {
+                console.log("DB not found or empty, initializing...");
+                keysDB = [];
+            }
+        }
+        loadKeys();
+
+        // VERIFY LOGIC
+        async function verifyKey() {
+            const input = document.getElementById('key-input').value.trim();
+            const status = document.getElementById('status-msg');
+            
+            if (!input) {
+                status.textContent = "Please enter a key.";
+                status.className = "status error";
+                return;
+            }
+
+            status.textContent = "Verifying...";
+            status.className = "status";
+
+            // Reload DB to ensure latest state
+            await loadKeys();
+
+            const keyIndex = keysDB.findIndex(k => k.code === input);
+            
+            if (keyIndex !== -1) {
+                if (keysDB[keyIndex].used) {
+                    status.textContent = "Key has already been used.";
+                    status.className = "status error";
+                } else {
+                    // Mark as used
+                    keysDB[keyIndex].used = true;
+                    keysDB[keyIndex].usedAt = new Date().toISOString();
+                    status.textContent = "Access Granted! Loading Script...";
+                    status.className = "status success";
+                    
+                    // In thực tế, bạn sẽ cần backend để ghi lại trạng thái 'used'
+                    // Vì Github Pages là static, ta chỉ giả lập việc verify thành công
+                    // Để lưu trạng thái 'used' vĩnh viễn, bạn cần dùng API của Github (cần token) hoặc backend riêng
+                    
+                    setTimeout(() => {
+                        alert("Key Valid! Copy the script loadstring below:\n\nloadstring(game:HttpGet('https://raw.githubusercontent.com/realmakehub-cell/toi-vo-toi/main/script.lua'))()");
+                    }, 1000);
+                }
+            } else {
+                status.textContent = "Invalid Key.";
+                status.className = "status error";
+            }
+        }
+
+        // ADMIN LOGIC
+        function toggleAdmin() {
+            const panel = document.getElementById('admin-panel');
+            panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function loginAdmin() {
+            const pass = document.getElementById('admin-pass').value;
+            if (pass === ADMIN_PASS) {
+                document.getElementById('admin-controls').style.display = 'block';
+                document.querySelector('#admin-panel button').style.display = 'none';
+                document.getElementById('admin-pass').style.display = 'none';
+                renderKeys();
+            } else {
+                alert("Wrong password!");
+            }
+        }
+
+        function generateKey() {
+            const newKey = {
+                code: generateUUID(),
+                created: new Date().toISOString(),
+                used: false
+            };
+            keysDB.push(newKey);
+            renderKeys();
+            // Copy to clipboard
+            navigator.clipboard.writeText(newKey.code);
+            alert("New Key Generated & Copied: " + newKey.code);
+        }
+
+        function generateUUID() {
+            return 'HP-' + Math.random().toString(36).substr(2, 4).toUpperCase() + '-' + 
+                   Math.random().toString(36).substr(2, 4).toUpperCase() + '-' + 
+                   Math.random().toString(36).substr(2, 4).toUpperCase();
+        }
+
+        function renderKeys() {
+            const list = document.getElementById('key-database');
+            list.innerHTML = '';
+            keysDB.slice().reverse().forEach(k => {
+                const div = document.createElement('div');
+                div.className = `key-item ${k.used ? 'used' : 'active'}`;
+                div.innerHTML = `<span>${k.code}</span> <span>${k.used ? 'USED' : 'ACTIVE'}</span>`;
+                list.appendChild(div);
+            });
+        }
+
+        async function saveToGithub() {
+            alert("Note: To save permanently to Github, you need a Backend or Github API Token with write access. This is a static demo.");
+            console.log(JSON.stringify(keysDB));
+        }
+    </script>
+</body>
+</html>
