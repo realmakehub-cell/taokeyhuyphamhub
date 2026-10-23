@@ -1,595 +1,503 @@
-
 <!DOCTYPE html>
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#050510">
-<title>Pulse Hub | Premium Key System</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#080808">
+<title>Chilli Hub X Venyx V6</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800;900&family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
 :root {
-  --cyan: #00f5ff;
-  --blue: #4385ff;
-  --purple: #a855f7;
-  --pink: #ff36c7;
-  --bg: #050510;
+  --red: #ff202d;
+  --red2: #ff5555;
+  --dark: #080808;
+  --white: #fff;
 }
-
 * {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
-
 body {
   min-height: 100vh;
-  min-height: 100svh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px 16px;
   overflow-x: hidden;
-  display: grid;
-  place-items: center;
-  padding: 30px 14px;
-  background: var(--bg);
   color: white;
-  font-family: Inter, "Segoe UI", Arial, sans-serif;
-  isolation: isolate;
-}
-
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -5;
   background:
-    radial-gradient(ellipse at 50% 0%, #39206b66, transparent 50%),
-    radial-gradient(ellipse at 0% 100%, #005d8650, transparent 45%),
-    radial-gradient(ellipse at 100% 60%, #6d168d30, transparent 40%),
-    #050510;
-  animation: backgroundPulse 9s ease-in-out infinite alternate;
+    radial-gradient(ellipse at 50% 35%, #351010 0%, #140808 38%, #050505 80%);
+  font-family: 'Rajdhani', sans-serif;
 }
-
-body::after {
-  content: "";
+button {
+  font: inherit;
+}
+/* ===== MOVING BACKGROUND ===== */
+.bg-grid {
   position: fixed;
   inset: 0;
-  z-index: -3;
   pointer-events: none;
-  opacity: .12;
   background-image:
-    linear-gradient(#8a9cff 1px, transparent 1px),
-    linear-gradient(90deg, #8a9cff 1px, transparent 1px);
-  background-size: 42px 42px;
-  mask-image: radial-gradient(ellipse, black, transparent 78%);
+    linear-gradient(#ff202d0b 1px, transparent 1px),
+    linear-gradient(90deg, #ff202d0b 1px, transparent 1px);
+  background-size: 38px 38px;
   animation: gridMove 18s linear infinite;
+  mask-image: linear-gradient(to bottom, black, transparent 95%);
 }
-
-/* Moving aurora */
-.aurora {
+@keyframes gridMove {
+  to { background-position: 38px 38px; }
+}
+.orb {
   position: fixed;
-  width: 65vw;
-  height: 65vw;
-  min-width: 320px;
-  min-height: 320px;
+  width: 280px;
+  height: 280px;
   border-radius: 50%;
-  filter: blur(90px);
+  background: #f00;
+  filter: blur(120px);
   opacity: .16;
   pointer-events: none;
-  z-index: -2;
-  animation: auroraMove 14s ease-in-out infinite alternate;
+  animation: orbFloat 7s ease-in-out infinite alternate;
 }
-
-.a1 {
-  background: var(--cyan);
-  top: -35%;
-  left: -20%;
+.orb.left { top: -100px; left: -100px; }
+.orb.right {
+  right: -100px;
+  bottom: -100px;
+  animation-delay: -3s;
 }
-
-.a2 {
-  background: var(--purple);
-  bottom: -40%;
-  right: -20%;
-  animation-delay: -7s;
+@keyframes orbFloat {
+  from { transform: translate(0, 0) scale(.8); }
+  to { transform: translate(70px, 50px) scale(1.35); }
 }
-
-.a3 {
-  width: 250px;
-  height: 250px;
-  min-width: 0;
-  min-height: 0;
-  background: var(--pink);
-  top: 40%;
-  left: 40%;
-  animation-duration: 19s;
-}
-
-/* Particles */
 #particles {
   position: fixed;
   inset: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
+  overflow: hidden;
   pointer-events: none;
 }
-
-.particle {
-  position: fixed;
-  bottom: -15px;
-  width: var(--size);
-  height: var(--size);
-  left: var(--x);
+.spark {
+  position: absolute;
+  bottom: -20px;
+  width: 3px;
+  height: 3px;
   border-radius: 50%;
-  background: var(--color);
-  box-shadow: 0 0 12px var(--color);
-  pointer-events: none;
-  animation: particleRise var(--duration) linear var(--delay) infinite;
+  background: #ff5148;
+  box-shadow: 0 0 12px 3px #ff171755;
+  animation: sparkUp linear infinite;
 }
-
-/* Card */
+@keyframes sparkUp {
+  0% { transform: translateY(0) scale(.5); opacity: 0; }
+  15% { opacity: 1; }
+  100% { transform: translateY(-110vh) translateX(40px) scale(1.5); opacity: 0; }
+}
+/* ===== MAIN CARD ===== */
+.page {
+  width: 100%;
+  max-width: 465px;
+  animation: pageEnter 1s cubic-bezier(.2,.8,.2,1) both;
+}
+@keyframes pageEnter {
+  from { opacity: 0; transform: translateY(35px) scale(.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
 .card {
   position: relative;
   isolation: isolate;
-  width: min(440px, 100%);
-  padding: 34px 26px 25px;
-  border: 1px solid transparent;
-  border-radius: 27px;
-  background:
-    linear-gradient(145deg, #111326f5, #080a19f7) padding-box,
-    conic-gradient(from var(--angle), #00f5ff, #4d53ff, #ff36c7, #00f5ff) border-box;
-  box-shadow:
-    0 0 45px #00d9ff12,
-    0 0 100px #a855f710,
-    inset 0 0 30px #6d8aff08;
-  backdrop-filter: blur(22px);
-  animation: cardEnter 1s cubic-bezier(.2,.8,.2,1) both,
-             cardFloat 7s ease-in-out 1s infinite;
-  transition: box-shadow .4s, border-radius .4s;
+  overflow: hidden;
+  padding: 32px 26px 24px;
+  border: 1px solid #ff30305c;
+  border-radius: 25px;
+  background: linear-gradient(145deg, #171010f5, #090909f7 70%);
+  box-shadow: 0 25px 90px #000b, 0 0 45px #ff101018;
+  backdrop-filter: blur(20px);
 }
-
-.card:hover {
-  box-shadow:
-    0 0 45px #00eaff24,
-    0 0 100px #a855f725,
-    inset 0 0 40px #6d8aff0c;
-}
-
-/* Rotating border */
-@property --angle {
-  syntax: "<angle>";
-  initial-value: 0deg;
-  inherits: false;
-}
-
 .card::before {
   content: "";
   position: absolute;
   z-index: -1;
   inset: 0;
   border-radius: inherit;
-  background: linear-gradient(115deg, #00f5ff09, transparent 40%, #a855f710);
+  padding: 1px;
+  background: linear-gradient(
+    120deg, #ff7777, transparent 22%,
+    transparent 68%, #ff2020
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box,
+                linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
   pointer-events: none;
 }
-
-.scan {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  height: 2px;
-  border-radius: 50%;
-  background: linear-gradient(90deg, transparent, var(--cyan), white, var(--purple), transparent);
-  box-shadow: 0 0 18px var(--cyan);
-  animation: scanMove 5s ease-in-out infinite;
-  opacity: .8;
-}
-
-.top-label {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 3px;
-  color: #99b6d9;
-  margin-bottom: 25px;
-}
-
-.top-label .live-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: #42ffbb;
-  box-shadow: 0 0 12px #42ffbb;
-  animation: blink 1.3s infinite;
-}
-
-/* Logo */
-.logo-area {
-  width: 116px;
-  height: 116px;
-  position: relative;
-  margin: 0 auto 22px;
-  display: grid;
-  place-items: center;
-}
-
-.ring {
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  border: 1px solid #00f5ff75;
-  box-shadow: 0 0 16px #00f5ff12;
-}
-
-.ring.r1 {
-  animation: spin 7s linear infinite;
-  border-top: 2px solid var(--cyan);
-  border-bottom: 2px solid var(--purple);
-}
-
-.ring.r2 {
-  inset: 9px;
-  border-style: dashed;
-  border-color: #a855f788;
-  animation: spinReverse 13s linear infinite;
-}
-
-.ring.r3 {
-  inset: -7px;
-  border-color: #00f5ff25;
-  animation: ringPulse 3s ease-in-out infinite;
-}
-
-.logo {
-  width: 78px;
-  height: 78px;
-  display: grid;
-  place-items: center;
-  border-radius: 24px;
-  border: 1px solid #00f5ff99;
-  background: linear-gradient(145deg, #152642, #17102f 70%);
-  box-shadow:
-    0 0 30px #00f5ff35,
-    inset 0 0 25px #a855f722;
-  font-size: 43px;
-  font-weight: 1000;
-  font-style: italic;
-  color: white;
-  text-shadow: 0 0 15px var(--cyan);
-  animation: logoGlow 3s ease-in-out infinite;
-}
-
-.spark {
-  position: absolute;
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: white;
-  box-shadow: 0 0 10px var(--cyan), 0 0 20px var(--cyan);
-}
-
-.s1 { top: 8px; right: 14px; animation: blink .9s infinite; }
-.s2 { bottom: 8px; left: 15px; animation: blink 1.5s infinite .4s; }
-.s3 { top: 53px; left: -5px; animation: blink 1.1s infinite .2s; }
-
-h1 {
-  text-align: center;
-  font-size: clamp(30px, 8vw, 42px);
-  line-height: 1.12;
-  font-weight: 1000;
-  letter-spacing: 2px;
-  background: linear-gradient(100deg, white 5%, var(--cyan) 35%, #b7a1ff 62%, #ff6adf 85%, white);
-  background-size: 250% auto;
-  color: transparent;
-  background-clip: text;
-  -webkit-background-clip: text;
-  animation: textShine 5s linear infinite;
-}
-
-.subtitle {
-  text-align: center;
-  margin-top: 12px;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 4px;
-  color: #8995b9;
-}
-
-.separator {
-  width: 100px;
-  height: 2px;
-  margin: 22px auto;
-  background: linear-gradient(90deg, transparent, var(--cyan), var(--purple), transparent);
-  box-shadow: 0 0 14px #00f5ff65;
-  animation: separatorGlow 3s ease-in-out infinite;
-}
-
-.status {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 9px;
-  color: #8fffd1;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 1.5px;
-  margin-bottom: 27px;
-}
-
-.status-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #39ffb2;
-  box-shadow: 0 0 15px #39ffb2;
-  animation: blink 1.4s infinite;
-}
-
-.section-label {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  color: #c1c9e3;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 1.6px;
-  margin-bottom: 11px;
-}
-
-.encrypted {
-  font-size: 9px;
-  letter-spacing: 1px;
-  color: #8b7eff;
-}
-
-/* Key field */
-.key-box {
-  position: relative;
-  padding: 17px 15px;
-  overflow: hidden;
-  border-radius: 14px;
-  border: 1px solid #8b5cf766;
-  background: linear-gradient(120deg, #080d1c, #141027, #080d1c);
-  background-size: 200% 100%;
-  animation: boxShimmer 7s linear infinite;
-  transition: border-color .3s, transform .3s, box-shadow .3s;
-}
-
-.key-box:hover {
-  transform: translateY(-2px);
-  border-color: var(--cyan);
-  box-shadow: 0 0 22px #00f5ff18;
-}
-
-.key-box::before {
+.card::after {
   content: "";
   position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 35%;
-  left: -50%;
-  background: linear-gradient(90deg, transparent, #ffffff0d, transparent);
-  transform: skewX(-20deg);
-  animation: shinePass 5s ease-in-out infinite;
-  pointer-events: none;
-}
-
-#keyText {
-  display: block;
-  position: relative;
-  z-index: 1;
-  overflow-wrap: anywhere;
-  font-family: "SFMono-Regular", Consolas, monospace;
-  font-size: 13px;
-  line-height: 1.8;
-  color: #e1f5ff;
-  user-select: all;
-  text-shadow: 0 0 12px #00eaff1c;
-}
-
-.key-note {
-  color: #747f9e;
-  font-size: 10px;
-  margin-top: 10px;
-  line-height: 1.6;
-}
-
-/* Copy button */
-.copy-btn {
-  position: relative;
-  width: 100%;
-  min-height: 55px;
-  margin-top: 19px;
-  overflow: hidden;
-  border: 1px solid #ffffff50;
-  border-radius: 14px;
-  cursor: pointer;
-  color: #060a18;
-  background: linear-gradient(100deg, #00f5ff, #73d9ff 35%, #b9a2ff 70%, #ff77df);
-  background-size: 220% auto;
-  font-size: 13px;
-  font-weight: 1000;
-  letter-spacing: 1.8px;
-  box-shadow: 0 0 24px #00eaff24;
-  transition: transform .25s, box-shadow .3s, filter .3s;
-  animation: buttonGradient 6s linear infinite;
-}
-
-.copy-btn::before {
-  content: "";
-  position: absolute;
-  top: -70%;
+  top: -80%;
   left: -70%;
   width: 40%;
   height: 250%;
-  background: #ffffff80;
   transform: rotate(25deg);
-  transition: left .6s;
+  background: linear-gradient(90deg, transparent, #ff555509, transparent);
+  animation: cardShine 8s ease-in-out infinite;
+  pointer-events: none;
 }
-
-.copy-btn:hover::before {
-  left: 140%;
+@keyframes cardShine {
+  0%, 60% { left: -70%; }
+  100% { left: 150%; }
 }
-
-.copy-btn:hover {
-  transform: translateY(-3px) scale(1.01);
-  box-shadow: 0 0 35px #00eaff45, 0 8px 20px #0005;
-  filter: brightness(1.08);
+/* ===== FLAME LOGO ===== */
+.logo {
+  width: 122px;
+  height: 130px;
+  position: relative;
+  margin: 0 auto 10px;
+  display: grid;
+  place-items: center;
 }
-
-.copy-btn:active {
-  transform: scale(.97);
+.fire-glow {
+  position: absolute;
+  width: 85px;
+  height: 90px;
+  background: #ff2100;
+  filter: blur(36px);
+  opacity: .55;
+  animation: fireGlow 1s ease-in-out infinite alternate;
 }
-
-.copy-btn.copied {
-  background: linear-gradient(100deg, #39ffb2, #00f5ff);
+@keyframes fireGlow {
+  from { transform: scale(.7); opacity: .25; }
+  to { transform: scale(1.3); opacity: .7; }
 }
-
-.message {
-  min-height: 17px;
-  margin-top: 12px;
-  text-align: center;
-  font-size: 11px;
+.flame {
+  position: relative;
+  width: 92px;
+  height: 112px;
+  z-index: 2;
+  filter: drop-shadow(0 0 9px #ff3500)
+          drop-shadow(0 0 23px #f20b00a0);
+  transform-origin: 50% 100%;
+  animation: flameDance .7s ease-in-out infinite alternate;
+}
+@keyframes flameDance {
+  0% { transform: rotate(-3deg) scale(.97, 1); }
+  50% { transform: rotate(2deg) scale(1.04, .96); }
+  100% { transform: rotate(-1deg) scale(.99, 1.04); }
+}
+.ring {
+  position: absolute;
+  inset: 0;
+  border: 1px solid #ff39394a;
+  border-radius: 50%;
+  animation: ringRotate 10s linear infinite;
+}
+.ring::before,
+.ring::after {
+  content: "";
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ff6565;
+  box-shadow: 0 0 12px #ff2020;
+}
+.ring::before { top: 12px; left: 22px; }
+.ring::after { right: 5px; bottom: 35px; }
+@keyframes ringRotate {
+  to { transform: rotate(360deg); }
+}
+/* ===== PREMIUM TITLE ===== */
+.eyebrow {
+  color: #ff7777;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 9px;
   font-weight: 700;
-  color: var(--cyan);
-  transition: opacity .3s;
+  letter-spacing: 4px;
+  margin-bottom: 12px;
 }
-
-.divider {
+.title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: clamp(25px, 6.6vw, 34px);
+  font-weight: 900;
+  line-height: 1.45;
+  letter-spacing: -1.2px;
+  background: linear-gradient(
+    110deg, #fff 0%, #ffb5b5 20%,
+    #ff2525 45%, #fff 60%, #ff4c4c 80%, #fff 100%
+  );
+  background-size: 250% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  filter: drop-shadow(0 0 14px #ff20202c);
+  animation: titleFlow 4s linear infinite, titlePulse 3s ease-in-out infinite;
+}
+.title.second {
+  font-size: clamp(23px, 5.8vw, 29px);
+  margin-top: 2px;
+}
+@keyframes titleFlow {
+  to { background-position: 250% center; }
+}
+@keyframes titlePulse {
+  0%, 100% { filter: drop-shadow(0 0 7px #ff202018); }
+  50% { filter: drop-shadow(0 0 19px #ff20205c); }
+}
+.subtitle {
+  margin-top: 12px;
+  color: #bba5a5;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 4px;
+}
+.line {
+  width: 100%;
   height: 1px;
-  margin: 21px 0 17px;
-  background: linear-gradient(90deg, transparent, #515477, #00f5ff50, transparent);
+  margin: 23px 0;
+  background: linear-gradient(90deg, transparent, #ff2929, #ff8585, #ff2929, transparent);
+  position: relative;
+  overflow: hidden;
 }
-
-.footer {
-  text-align: center;
-  color: #727d9d;
-  font-size: 10px;
-  letter-spacing: 1px;
-  line-height: 2;
+.line::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -35%;
+  width: 30%;
+  height: 2px;
+  background: white;
+  box-shadow: 0 0 12px #fff, 0 0 20px #ff2020;
+  animation: lineTravel 2.5s linear infinite;
 }
-
-.footer strong {
-  color: #d2d8f5;
+@keyframes lineTravel {
+  to { left: 110%; }
 }
-
-.footer .heart {
-  display: inline-block;
-  color: #ff63dc;
-  animation: heartbeat 1.5s infinite;
-}
-
-.version {
-  display: inline-block;
-  margin-top: 10px;
-  padding: 5px 10px;
-  border: 1px solid #8b5cf744;
+/* ===== STATUS ===== */
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 15px;
+  border: 1px solid #ff393943;
   border-radius: 30px;
-  background: #8b5cf710;
-  color: #b6a8ff;
+  background: #ff20200d;
+  color: #ff8585;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.6px;
+  margin-bottom: 24px;
+}
+.status-dot {
+  width: 7px;
+  height: 7px;
+  background: #ff3030;
+  border-radius: 50%;
+  box-shadow: 0 0 12px #ff3030;
+  animation: blink 1s ease-in-out infinite;
+}
+@keyframes blink {
+  50% { opacity: .25; transform: scale(.7); }
+}
+/* ===== BEAUTIFUL KEY BOX ===== */
+.key-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+  text-align: left;
+}
+.key-heading strong {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 11px;
+  letter-spacing: 1.2px;
+  color: #eee;
+}
+.key-heading span {
+  color: #ff6565;
+  font-family: 'Orbitron', sans-serif;
   font-size: 9px;
   letter-spacing: 1px;
 }
-
-/* Animations */
-@keyframes cardEnter {
-  from { opacity: 0; transform: translateY(35px) scale(.94); filter: blur(8px); }
-  to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+.key-shell {
+  position: relative;
+  padding: 1px;
+  border-radius: 15px;
+  background: linear-gradient(115deg, #ff2525, #512020, #ff7777, #351010, #ff2525);
+  background-size: 300% 300%;
+  animation: borderFlow 5s linear infinite;
+  box-shadow: 0 0 23px #ff17171a;
 }
-
-@keyframes cardFloat {
-  0%, 100% { translate: 0 0; }
-  50% { translate: 0 -5px; }
+@keyframes borderFlow {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 300% 50%; }
 }
-
-@keyframes spin {
-  to { rotate: 360deg; }
+.key-inner {
+  position: relative;
+  min-height: 90px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 18px 15px;
+  border-radius: 14px;
+  background: radial-gradient(ellipse at top, #281010, #0b0909 80%);
+  overflow: hidden;
 }
-
-@keyframes spinReverse {
-  to { rotate: -360deg; }
+.key-inner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg, transparent 0 7px, #ff333305 8px 9px
+  );
+  pointer-events: none;
 }
-
-@keyframes ringPulse {
-  0%, 100% { scale: 1; opacity: .4; }
-  50% { scale: 1.12; opacity: 1; }
+.key-inner::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -70%;
+  width: 40%;
+  height: 100%;
+  transform: skewX(-20deg);
+  background: linear-gradient(90deg, transparent, #ff55551a, transparent);
+  animation: keyShine 4s ease-in-out infinite;
+  pointer-events: none;
 }
-
-@keyframes logoGlow {
-  0%, 100% { box-shadow: 0 0 22px #00f5ff25, inset 0 0 15px #a855f722; }
-  50% { box-shadow: 0 0 42px #00f5ff45, inset 0 0 25px #a855f744; }
-}
-
-@keyframes textShine {
-  to { background-position: 250% center; }
-}
-
-@keyframes separatorGlow {
-  0%, 100% { opacity: .65; filter: hue-rotate(0deg); }
-  50% { opacity: 1; filter: hue-rotate(50deg); }
-}
-
-@keyframes boxShimmer {
-  to { background-position: 200% center; }
-}
-
-@keyframes shinePass {
-  0%, 60% { left: -50%; }
+@keyframes keyShine {
+  0%, 65% { left: -70%; }
   100% { left: 150%; }
 }
-
-@keyframes buttonGradient {
-  to { background-position: 220% center; }
+.key-text {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  color: #ff8b8b;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: clamp(13px, 3.4vw, 15px);
+  line-height: 1.8;
+  letter-spacing: .4px;
+  overflow-wrap: anywhere;
+  user-select: all;
+  text-shadow: 0 0 9px #ff20204c;
 }
-
-@keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: .35; }
+.key-tip {
+  margin-top: 9px;
+  text-align: left;
+  color: #8d7a7a;
+  font-size: 12px;
 }
-
-@keyframes scanMove {
-  0%, 100% { top: 0; opacity: 0; }
-  10% { opacity: .8; }
-  80% { opacity: .8; }
-  95% { top: 100%; opacity: 0; }
+/* ===== COPY BUTTON ===== */
+.copy-btn {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 57px;
+  margin-top: 18px;
+  overflow: hidden;
+  border: 1px solid #ff6969;
+  border-radius: 13px;
+  background: linear-gradient(105deg, #9b0000, #f52525, #a90000);
+  background-size: 200% 100%;
+  color: white;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  cursor: pointer;
+  box-shadow: 0 7px 25px #ff16162b;
+  animation: buttonFlow 4s linear infinite;
+  transition: transform .25s, box-shadow .25s;
 }
-
-@keyframes particleRise {
-  0% { transform: translate3d(0, 0, 0) scale(.4); opacity: 0; }
-  10% { opacity: .8; }
-  80% { opacity: .7; }
-  100% { transform: translate3d(var(--drift), -110vh, 0) scale(1.3); opacity: 0; }
+@keyframes buttonFlow {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
 }
-
-@keyframes backgroundPulse {
-  to { filter: hue-rotate(25deg) brightness(1.15); }
+.copy-btn::before {
+  content: "";
+  position: absolute;
+  top: -100%;
+  left: -70%;
+  width: 40%;
+  height: 300%;
+  transform: rotate(25deg);
+  background: linear-gradient(90deg, transparent, #ffffff50, transparent);
+  transition: left .65s;
+  z-index: -1;
 }
-
-@keyframes gridMove {
-  to { background-position: 42px 42px; }
+.copy-btn:hover::before {
+  left: 140%;
 }
-
-@keyframes auroraMove {
-  to { transform: translate(14vw, 12vh) scale(1.2); }
+.copy-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 35px #ff16165c;
 }
-
-@keyframes heartbeat {
-  0%, 100% { transform: scale(1); }
-  15% { transform: scale(1.3); }
-  30% { transform: scale(1); }
-  45% { transform: scale(1.2); }
+.copy-btn:active {
+  transform: scale(.975);
 }
-
-@media (max-width: 420px) {
-  .card { padding: 29px 20px 23px; }
-  .logo-area { width: 104px; height: 104px; }
-  .logo { width: 70px; height: 70px; font-size: 39px; }
-  #keyText { font-size: 12px; }
-  .top-label { letter-spacing: 2px; }
+.copy-btn:focus-visible {
+  outline: 2px solid white;
+  outline-offset: 4px;
 }
-
+.copy-icon {
+  font-size: 20px;
+  line-height: 1;
+}
+.description {
+  margin-top: 17px;
+  color: #9c8b8b;
+  font-size: 14px;
+  line-height: 1.8;
+}
+.description strong {
+  color: #ff6b6b;
+  letter-spacing: .7px;
+}
+.footer {
+  margin-top: 23px;
+  padding-top: 17px;
+  border-top: 1px solid #ffffff0d;
+  color: #625252;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  line-height: 2;
+}
+.footer span {
+  color: #a74a4a;
+}
+/* ===== NOTIFICATION ===== */
+.toast {
+  position: fixed;
+  z-index: 5;
+  left: 50%;
+  bottom: 25px;
+  width: max-content;
+  max-width: calc(100% - 30px);
+  padding: 13px 20px;
+  border: 1px solid #ff3939;
+  border-radius: 12px;
+  background: #170b0b;
+  color: white;
+  font-size: 14px;
+  text-align: center;
+  box-shadow: 0 0 30px #ff202025;
+  opacity: 0;
+  transform: translate(-50%, 20px);
+  transition: .3s;
+  pointer-events: none;
+}
+.toast.show {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+@media (max-width: 380px) {
+  .card { padding: 27px 17px 21px; }
+  .title { letter-spacing: -1.4px; }
+  .subtitle { letter-spacing: 2.5px; }
+}
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: .01ms !important;
@@ -599,197 +507,146 @@ h1 {
 }
 </style>
 </head>
-
 <body>
-<div class="aurora a1"></div>
-<div class="aurora a2"></div>
-<div class="aurora a3"></div>
-<div id="particles"></div>
-
-<main class="card" id="card">
-  <div class="scan"></div>
-
-  <div class="top-label">
-    <span class="live-dot"></span>
-    PULSE SYSTEM ONLINE
-    <span class="live-dot"></span>
-  </div>
-
-  <div class="logo-area">
-    <div class="ring r1"></div>
-    <div class="ring r2"></div>
-    <div class="ring r3"></div>
-    <div class="logo">P</div>
-    <span class="spark s1"></span>
-    <span class="spark s2"></span>
-    <span class="spark s3"></span>
-  </div>
-
-  <h1>PULSE HUB</h1>
-  <p class="subtitle">NEXT GENERATION KEY SYSTEM</p>
-
-  <div class="separator"></div>
-
-  <div class="status">
-    <span class="status-dot"></span>
-    ACCESS KEY READY
-  </div>
-
-  <div class="section-label">
-    <span>YOUR ACCESS KEY</span>
-    <span class="encrypted">✦ PULSE ACCESS</span>
-  </div>
-
-  <div class="key-box">
-    <code id="keyText">PulsehubKeyKalwpwjwbLapoqhwbwkBamwkwuwo</code>
-  </div>
-
-  <p class="key-note">✧ Keep your key safe and copy it before use.</p>
-
-  <button class="copy-btn" id="copyBtn" type="button">
-    <span id="buttonText">✦ &nbsp; COPY KEY</span>
-  </button>
-
-  <p class="message" id="message" aria-live="polite"></p>
-
-  <div class="divider"></div>
-
-  <div class="footer">
-    CRAFTED FOR THE NEXT LEVEL<br>
-    POWERED BY <strong>PULSE HUB</strong>
-    <br>
-    MADE WITH <span class="heart">♥</span> FOR THE COMMUNITY
-    <br>
-    <span class="version">PULSE UI · V2.0</span>
-  </div>
+<div class="bg-grid"></div>
+<div class="orb left"></div>
+<div class="orb right"></div>
+<div id="particles" aria-hidden="true"></div>
+<main class="page">
+  <section class="card">
+    <div class="logo">
+      <div class="fire-glow"></div>
+      <div class="ring"></div>
+      <svg class="flame" viewBox="0 0 100 120"
+           xmlns="http://www.w3.org/2000/svg"
+           role="img" aria-label="Flaming logo">
+        <defs>
+          <linearGradient id="outer" x1="0" y1="1" x2=".6" y2="0">
+            <stop offset="0%" stop-color="#a00000"/>
+            <stop offset="42%" stop-color="#ff2600"/>
+            <stop offset="76%" stop-color="#ff7517"/>
+            <stop offset="100%" stop-color="#fff0a0"/>
+          </linearGradient>
+          <linearGradient id="inner" x1="0" y1="1" x2=".4" y2="0">
+            <stop offset="0%" stop-color="#ff3500"/>
+            <stop offset="65%" stop-color="#ffb52e"/>
+            <stop offset="100%" stop-color="#fffbd0"/>
+          </linearGradient>
+        </defs>
+        <path fill="url(#outer)" d="
+          M51 3 C57 24 82 28 78 55
+          C94 44 91 31 88 26
+          C108 53 100 79 85 99
+          C73 115 54 119 38 112
+          C13 105 2 84 9 62
+          C13 48 23 39 26 24
+          C38 34 39 47 37 55
+          C48 42 49 25 51 3Z"/>
+        <path fill="url(#inner)" d="
+          M53 43 C59 60 73 65 68 81
+          C65 92 55 101 43 96
+          C29 90 29 76 37 64
+          C40 76 47 74 48 63
+          C49 55 51 49 53 43Z"/>
+        <path fill="#fff4d2" d="
+          M48 74 C53 81 56 84 52 92
+          C49 97 43 96 41 91
+          C39 86 43 80 48 74Z"/>
+      </svg>
+    </div>
+    <p class="eyebrow">✦ PREMIUM ACCESS SYSTEM ✦</p>
+    <h1 class="title">CHILLI HUB</h1>
+    <h2 class="title second">X VENYX V6</h2>
+    <p class="subtitle">NEXT GENERATION</p>
+    <div class="line"></div>
+    <div class="status">
+      <span class="status-dot"></span>
+      YOUR KEY PANEL
+    </div>
+    <div class="key-heading">
+      <strong>YOUR ACCESS KEY</strong>
+      <span>● V6 SYSTEM</span>
+    </div>
+    <div class="key-shell">
+      <div class="key-inner">
+        <div class="key-text" id="key">
+          ChilliHubxVenyxV6KwyKakwiwjkeoLapqowjheiwiOqowi
+        </div>
+      </div>
+    </div>
+    <p class="key-tip">↳ Key của bạn được hiển thị ở trên.</p>
+    <button class="copy-btn" id="copyButton" type="button">
+      <span class="copy-icon" id="copyIcon">✦</span>
+      <span id="buttonText">COPY YOUR KEY</span>
+      <span class="copy-icon">➜</span>
+    </button>
+    <p class="description">
+      One Click. <strong>Instant Copy.</strong><br>
+      Chilli Hub X Venyx V6 Edition
+    </p>
+    <footer class="footer">
+      POWERED BY <span>CHILLI HUB</span><br>
+      BLACK & RED · V6 EDITION
+    </footer>
+  </section>
 </main>
-
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script>
-const KEY = "PulsehubKeyKalwpwjwbLapoqhwbwkBamwkwuwo";
-const copyBtn = document.getElementById("copyBtn");
-const buttonText = document.getElementById("buttonText");
-const message = document.getElementById("message");
-const card = document.getElementById("card");
-const particles = document.getElementById("particles");
-
-let resetTimer;
-
-function createParticles() {
-  const fragment = document.createDocumentFragment();
-
-  for (let i = 0; i < 42; i++) {
-    const p = document.createElement("span");
-    p.className = "particle";
-
-    const hue = [185, 215, 260, 300][i % 4];
-
-    p.style.setProperty("--x", Math.random() * 100 + "%");
-    p.style.setProperty("--size", (2 + Math.random() * 3) + "px");
-    p.style.setProperty("--duration", (8 + Math.random() * 13) + "s");
-    p.style.setProperty("--delay", (-Math.random() * 18) + "s");
-    p.style.setProperty("--drift", (-60 + Math.random() * 120) + "px");
-    p.style.setProperty("--color", `hsl(${hue} 100% 72%)`);
-
-    fragment.appendChild(p);
-  }
-
-  particles.appendChild(fragment);
+/* Floating fire particles */
+const particleBox = document.getElementById("particles");
+for (let i = 0; i < 32; i++) {
+  const p = document.createElement("i");
+  p.className = "spark";
+  p.style.left = Math.random() * 100 + "%";
+  p.style.animationDuration = (6 + Math.random() * 9) + "s";
+  p.style.animationDelay = (-Math.random() * 12) + "s";
+  p.style.opacity = (0.3 + Math.random() * 0.7).toFixed(2);
+  const size = (2 + Math.random() * 3) + "px";
+  p.style.width = size;
+  p.style.height = size;
+  particleBox.appendChild(p);
 }
-
-createParticles();
-
-async function copyKey() {
+const button = document.getElementById("copyButton");
+const buttonText = document.getElementById("buttonText");
+const copyIcon = document.getElementById("copyIcon");
+const toast = document.getElementById("toast");
+let toastTimer;
+function showToast(message) {
+  toast.textContent = message;
+  toast.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => {
+    toast.classList.remove("show");
+  }, 2600);
+}
+button.addEventListener("click", async () => {
+  const key = document.getElementById("key").textContent.trim();
   try {
     if (navigator.clipboard && window.isSecureContext) {
-      await navigator.clipboard.writeText(KEY);
+      await navigator.clipboard.writeText(key);
     } else {
       const area = document.createElement("textarea");
-      area.value = KEY;
+      area.value = key;
+      area.setAttribute("readonly", "");
       area.style.position = "fixed";
-      area.style.opacity = "0";
-      area.style.pointerEvents = "none";
+      area.style.left = "-9999px";
       document.body.appendChild(area);
-      area.focus();
       area.select();
-
-      const success = document.execCommand("copy");
+      const ok = document.execCommand("copy");
       area.remove();
-
-      if (!success) throw new Error("Copy failed");
+      if (!ok) throw new Error("Copy failed");
     }
-
-    copyBtn.classList.add("copied");
-    buttonText.textContent = "✓  KEY COPIED SUCCESSFULLY!";
-    message.textContent = "✦ Your key has been copied to clipboard!";
-
-    if (navigator.vibrate) navigator.vibrate(35);
-
-    clearTimeout(resetTimer);
-    resetTimer = setTimeout(() => {
-      copyBtn.classList.remove("copied");
-      buttonText.textContent = "✦  COPY KEY";
-      message.textContent = "";
-    }, 2500);
-
+    buttonText.textContent = "KEY COPIED SUCCESSFULLY!";
+    copyIcon.textContent = "✓";
+    showToast("✓ Sao chép key thành công!");
+    setTimeout(() => {
+      buttonText.textContent = "COPY YOUR KEY";
+      copyIcon.textContent = "✦";
+    }, 2200);
   } catch (error) {
-    message.textContent = "Select the key above and copy it manually.";
-  }
-}
-
-copyBtn.addEventListener("click", copyKey);
-
-/* Subtle 3D tilt on mouse devices */
-if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
-  card.addEventListener("pointermove", (event) => {
-    const rect = card.getBoundingClientRect();
-    const x = (event.clientX - rect.left) / rect.width - 0.5;
-    const y = (event.clientY - rect.top) / rect.height - 0.5;
-
-    card.style.transform =
-      `perspective(1000px) rotateX(${-y * 3}deg) rotateY(${x * 3}deg)`;
-  });
-
-  card.addEventListener("pointerleave", () => {
-    card.style.transform = "";
-  });
-}
-
-/* Small sparkle burst when the card is clicked */
-card.addEventListener("click", (event) => {
-  if (event.target.closest("button")) return;
-
-  for (let i = 0; i < 7; i++) {
-    const spark = document.createElement("span");
-    spark.textContent = "✦";
-    spark.style.cssText = `
-      position:fixed;
-      left:${event.clientX}px;
-      top:${event.clientY}px;
-      z-index:99;
-      pointer-events:none;
-      color:${i % 2 ? "#00f5ff" : "#c4a4ff"};
-      font-size:${10 + Math.random() * 13}px;
-      animation:sparkleBurst .7s ease-out forwards;
-    `;
-
-    const angle = Math.PI * 2 * i / 7;
-    spark.style.setProperty("--dx", `${Math.cos(angle) * 65}px`);
-    spark.style.setProperty("--dy", `${Math.sin(angle) * 65}px`);
-    document.body.appendChild(spark);
-    spark.addEventListener("animationend", () => spark.remove());
+    showToast("Không thể tự copy. Hãy chọn key và sao chép thủ công.");
   }
 });
-
-const sparkleStyle = document.createElement("style");
-sparkleStyle.textContent = `
-@keyframes sparkleBurst {
-  from { transform:translate(-50%,-50%) scale(.3); opacity:1; }
-  to {
-    transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy))) scale(1.4);
-    opacity:0;
-  }
-}`;
-document.head.appendChild(sparkleStyle);
 </script>
 </body>
 </html>
