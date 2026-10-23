@@ -3,275 +3,241 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>huyphamdeptrailongleuleuoccut - Get Key Access</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <title>RingTaScripts Hub | Key System</title>
+    <!-- Google Font & Font Awesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
+        :root {
+            --bg-color: #0b0d13;
+            --card-bg: rgba(22, 27, 38, 0.65);
+            --accent-color: #00f2fe;
+            --accent-gradient: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
+            --text-main: #ffffff;
+            --text-muted: #8a99ad;
+            --border-glow: rgba(0, 242, 254, 0.25);
+        }
+
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-            font-family: 'Rajdhani', sans-serif;
+            font-family: 'Plus Jakarta Sans', sans-serif;
         }
 
         body {
-            background-color: #05070a;
-            color: #e2e8f0;
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(circle at 15% 20%, rgba(0, 198, 255, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 85% 80%, rgba(0, 114, 255, 0.12) 0%, transparent 40%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
+            padding: 20px;
             overflow: hidden;
-            position: relative;
         }
 
-        /* Nền lưới 3D Cyberpunk */
-        .bg-grid {
-            position: absolute;
-            width: 200%;
-            height: 200%;
-            background-image: 
-                linear-gradient(to right, rgba(0, 242, 254, 0.05) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(0, 242, 254, 0.05) 1px, transparent 1px);
-            background-size: 40px 40px;
-            transform: perspective(500px) rotateX(60deg) translateY(-100px);
-            animation: gridMove 20s linear infinite;
-            z-index: 1;
-        }
-
-        @keyframes gridMove {
-            0% { transform: perspective(500px) rotateX(60deg) translateY(0); }
-            100% { transform: perspective(500px) rotateX(60deg) translateY(40px); }
-        }
-
-        /* Quầng sáng Neon tỏa phía sau */
-        .orb-1, .orb-2 {
-            position: absolute;
-            width: 300px;
-            height: 300px;
-            border-radius: 50%;
-            filter: blur(90px);
-            opacity: 0.35;
-            z-index: 1;
-        }
-        .orb-1 { background: #00f2fe; top: 15%; left: 20%; }
-        .orb-2 { background: #9d4edd; bottom: 15%; right: 20%; }
-
-        /* Khung hiển thị Glassmorphism */
-        .card-container {
-            position: relative;
-            z-index: 10;
-            background: rgba(13, 17, 23, 0.75);
+        /* Card Container with Glassmorphism */
+        .card {
+            background: var(--card-bg);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(0, 242, 254, 0.3);
+            border: 1px solid var(--border-glow);
             border-radius: 20px;
             padding: 40px 30px;
-            max-width: 480px;
-            width: 90%;
+            width: 100%;
+            max-width: 440px;
             text-align: center;
-            box-shadow: 0 0 30px rgba(0, 242, 254, 0.15),
-                        inset 0 0 15px rgba(0, 242, 254, 0.05);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6),
+                        0 0 30px rgba(0, 242, 254, 0.08);
+            position: relative;
+            transition: transform 0.3s ease;
         }
 
-        /* Biểu tượng Đầu Lâu Neon (Animation) */
-        .skull-wrapper {
-            position: relative;
-            width: 120px;
-            height: 120px;
-            margin: 0 auto 20px;
-            display: flex;
-            justify-content: center;
+        .card:hover {
+            transform: translateY(-4px);
+        }
+
+        /* Badge Status */
+        .status-badge {
+            display: inline-flex;
             align-items: center;
-        }
-
-        .skull-glow {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, rgba(0, 242, 254, 0.4) 0%, transparent 70%);
-            border-radius: 50%;
-            animation: pulse 2.5s infinite ease-in-out;
-        }
-
-        .skull-svg {
-            width: 90px;
-            height: 90px;
-            fill: none;
-            stroke: #00f2fe;
-            stroke-width: 1.8;
-            filter: drop-shadow(0 0 12px #00f2fe);
-            animation: float 3s infinite ease-in-out;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(0.9); opacity: 0.4; }
-            50% { transform: scale(1.2); opacity: 0.8; }
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
-        }
-
-        /* Tiêu đề */
-        h1 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 32px;
-            font-weight: 900;
-            letter-spacing: 3px;
-            background: linear-gradient(135deg, #ffffff 0%, #00f2fe 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-transform: uppercase;
-            margin-bottom: 5px;
-            text-shadow: 0 0 20px rgba(0, 242, 254, 0.3);
-        }
-
-        .subtitle {
-            font-size: 14px;
-            color: #94a3b8;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            margin-bottom: 25px;
+            gap: 6px;
+            background: rgba(0, 242, 254, 0.1);
+            border: 1px solid rgba(0, 242, 254, 0.2);
+            color: var(--accent-color);
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 0.75rem;
             font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-bottom: 20px;
         }
 
-        /* Khung chứa Key */
-        .key-container {
-            background: rgba(5, 7, 10, 0.8);
-            border: 1px solid rgba(0, 242, 254, 0.4);
-            border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 25px;
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--accent-color);
+        }
+
+        /* Typography */
+        h1 {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        p.subtitle {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 28px;
+        }
+
+        /* Input Wrapper */
+        .input-group {
             position: relative;
-            overflow: hidden;
-            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
+            margin-bottom: 20px;
         }
 
-        .key-container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
+        .key-input {
             width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 242, 254, 0.15), transparent);
-            transition: 0.5s;
-            animation: shine 3s infinite;
-        }
-
-        @keyframes shine {
-            0% { left: -100%; }
-            20% { left: 100%; }
-            100% { left: 100%; }
-        }
-
-        .key-text {
-            font-family: 'Orbitron', monospace;
-            font-size: 15px;
-            font-weight: 700;
-            color: #00f2fe;
-            word-break: break-all;
-            letter-spacing: 1px;
-            text-shadow: 0 0 8px rgba(0, 242, 254, 0.5);
-        }
-
-        /* Nút Sao Chép */
-        .btn {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 15px;
-            font-weight: 700;
-            padding: 14px 20px;
-            width: 100%;
-            border-radius: 10px;
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
+            background: rgba(10, 13, 20, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 16px 45px 16px 16px;
+            color: var(--accent-color);
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-align: left;
+            outline: none;
             transition: all 0.3s ease;
-            background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
-            color: #05070a;
+        }
+
+        .key-input:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.2);
+        }
+
+        .input-icon {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        /* Primary Button */
+        .btn-copy {
+            width: 100%;
+            background: var(--accent-gradient);
+            color: #ffffff;
             border: none;
-            box-shadow: 0 0 20px rgba(0, 242, 254, 0.4);
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 8px 25px rgba(0, 114, 255, 0.35);
+            transition: all 0.3s ease;
         }
 
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 0 30px rgba(0, 242, 254, 0.7);
+        .btn-copy:hover {
+            opacity: 0.95;
+            box-shadow: 0 12px 30px rgba(0, 198, 255, 0.5);
+            transform: translateY(-1px);
         }
 
-        .footer-text {
-            margin-top: 25px;
-            font-size: 12px;
-            color: #64748b;
-            letter-spacing: 1px;
+        .btn-copy:active {
+            transform: scale(0.98);
         }
 
-        /* Thông báo Toast */
+        /* Toast Alert */
         .toast {
             position: fixed;
             bottom: -60px;
             left: 50%;
             transform: translateX(-50%);
-            background: #00f2fe;
-            color: #05070a;
+            background: rgba(16, 185, 129, 0.9);
+            color: white;
             padding: 12px 24px;
-            border-radius: 30px;
-            font-weight: 700;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 13px;
-            box-shadow: 0 0 20px rgba(0, 242, 254, 0.6);
-            transition: bottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            z-index: 100;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(8px);
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            opacity: 0;
         }
 
         .toast.show {
             bottom: 30px;
+            opacity: 1;
         }
     </style>
 </head>
 <body>
 
-    <div class="bg-grid"></div>
-    <div class="orb-1"></div>
-    <div class="orb-2"></div>
+    <div class="card">
+        <div class="status-badge">
+            <span class="status-dot"></span>
+            SYSTEM ONLINE
+        </div>
+        
+        <h1>RingTaScripts Hub</h1>
+        <p class="subtitle">Nhấp bên dưới để sao chép key xác thực</p>
 
-    <div class="card-container">
-        <!-- Biểu tượng Đầu Lâu Phát Sáng -->
-        <div class="skull-wrapper">
-            <div class="skull-glow"></div>
-            <svg class="skull-svg" viewBox="0 0 24 24">
-                <path d="M12 2C7.58 2 4 5.58 4 10c0 2.5 1.14 4.73 2.94 6.21C7.29 16.5 8 17.5 8 18.5V20c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-1.5c0-1 .71-2 1.06-2.29C18.86 14.73 20 12.5 20 10c0-4.42-3.58-8-8-8zm-3 9c-.83 0-1.5-.67-1.5-1.5S8.17 8 9 8s1.5.67 1.5 1.5S9.83 11 9 11zm6 0c-.83 0-1.5-.67-1.5-1.5S14.17 8 15 8s1.5.67 1.5 1.5S15.83 11 15 11zm-5.5 5h5v1h-5v-1z"/>
-            </svg>
+        <div class="input-group">
+            <input type="text" id="keyInput" class="key-input" value="RingTaScripsForsakenHubRobloxHack" readonly>
+            <i class="fa-solid fa-key input-icon"></i>
         </div>
 
-        <h1>SkullHub</h1>
-        <div class="subtitle">Your Premium Key Access</div>
-
-        <div class="key-container">
-            <div class="key-text" id="keyText">SkullHubEvomonRobloxGameHack</div>
-        </div>
-
-        <button class="btn" onclick="copyKey()">Copy Key</button>
-
-        <div class="footer-text">© 2026 SkullHub. Secured Cyber Access.</div>
+        <button class="btn-copy" onclick="copyKey()">
+            <i class="fa-regular fa-copy"></i>
+            <span id="btnText">Sao Chép Key</span>
+        </button>
     </div>
 
-    <div class="toast" id="toast">KEY COPIED TO CLIPBOARD!</div>
+    <!-- Thông báo nổi khi sao chép -->
+    <div id="toast" class="toast">
+        <i class="fa-solid fa-circle-check"></i>
+        <span>Đã sao chép key thành công!</span>
+    </div>
 
     <script>
         function copyKey() {
-            const keyText = document.getElementById("keyText").innerText;
+            const keyInput = document.getElementById("keyInput");
+            const btnText = document.getElementById("btnText");
             const toast = document.getElementById("toast");
 
-            navigator.clipboard.writeText(keyText).then(() => {
+            // Sao chép nội dung
+            navigator.clipboard.writeText(keyInput.value).then(() => {
+                // Đổi chữ trên nút tạm thời
+                btnText.innerText = "Đã Chép!";
+                
+                // Hiển thị Toast
                 toast.classList.add("show");
+
                 setTimeout(() => {
+                    btnText.innerText = "Sao Chép Key";
                     toast.classList.remove("show");
                 }, 2500);
-            }).catch(err => {
-                alert("Lỗi sao chép Key: " + err);
             });
         }
     </script>
+
 </body>
 </html>
