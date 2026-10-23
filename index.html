@@ -1,243 +1,795 @@
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RingTaScripts Hub | Key System</title>
-    <!-- Google Font & Font Awesome Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <style>
-        :root {
-            --bg-color: #0b0d13;
-            --card-bg: rgba(22, 27, 38, 0.65);
-            --accent-color: #00f2fe;
-            --accent-gradient: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
-            --text-main: #ffffff;
-            --text-muted: #8a99ad;
-            --border-glow: rgba(0, 242, 254, 0.25);
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#050510">
+<title>Pulse Hub | Premium Key System</title>
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-        }
+<style>
+:root {
+  --cyan: #00f5ff;
+  --blue: #4385ff;
+  --purple: #a855f7;
+  --pink: #ff36c7;
+  --bg: #050510;
+}
 
-        body {
-            background-color: var(--bg-color);
-            background-image: 
-                radial-gradient(circle at 15% 20%, rgba(0, 198, 255, 0.12) 0%, transparent 40%),
-                radial-gradient(circle at 85% 80%, rgba(0, 114, 255, 0.12) 0%, transparent 40%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            overflow: hidden;
-        }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-        /* Card Container with Glassmorphism */
-        .card {
-            background: var(--card-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--border-glow);
-            border-radius: 20px;
-            padding: 40px 30px;
-            width: 100%;
-            max-width: 440px;
-            text-align: center;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6),
-                        0 0 30px rgba(0, 242, 254, 0.08);
-            position: relative;
-            transition: transform 0.3s ease;
-        }
+body {
+  min-height: 100vh;
+  min-height: 100svh;
+  overflow-x: hidden;
+  display: grid;
+  place-items: center;
+  padding: 30px 14px;
+  background: var(--bg);
+  color: white;
+  font-family: Inter, "Segoe UI", Arial, sans-serif;
+  isolation: isolate;
+}
 
-        .card:hover {
-            transform: translateY(-4px);
-        }
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -5;
+  background:
+    radial-gradient(ellipse at 50% 0%, #39206b66, transparent 50%),
+    radial-gradient(ellipse at 0% 100%, #005d8650, transparent 45%),
+    radial-gradient(ellipse at 100% 60%, #6d168d30, transparent 40%),
+    #050510;
+  animation: backgroundPulse 9s ease-in-out infinite alternate;
+}
 
-        /* Badge Status */
-        .status-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: rgba(0, 242, 254, 0.1);
-            border: 1px solid rgba(0, 242, 254, 0.2);
-            color: var(--accent-color);
-            padding: 6px 14px;
-            border-radius: 30px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            margin-bottom: 20px;
-        }
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -3;
+  pointer-events: none;
+  opacity: .12;
+  background-image:
+    linear-gradient(#8a9cff 1px, transparent 1px),
+    linear-gradient(90deg, #8a9cff 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: radial-gradient(ellipse, black, transparent 78%);
+  animation: gridMove 18s linear infinite;
+}
 
-        .status-dot {
-            width: 6px;
-            height: 6px;
-            background-color: var(--accent-color);
-            border-radius: 50%;
-            box-shadow: 0 0 8px var(--accent-color);
-        }
+/* Moving aurora */
+.aurora {
+  position: fixed;
+  width: 65vw;
+  height: 65vw;
+  min-width: 320px;
+  min-height: 320px;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: .16;
+  pointer-events: none;
+  z-index: -2;
+  animation: auroraMove 14s ease-in-out infinite alternate;
+}
 
-        /* Typography */
-        h1 {
-            font-size: 1.75rem;
-            font-weight: 800;
-            color: var(--text-main);
-            margin-bottom: 8px;
-            letter-spacing: -0.5px;
-        }
+.a1 {
+  background: var(--cyan);
+  top: -35%;
+  left: -20%;
+}
 
-        p.subtitle {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            margin-bottom: 28px;
-        }
+.a2 {
+  background: var(--purple);
+  bottom: -40%;
+  right: -20%;
+  animation-delay: -7s;
+}
 
-        /* Input Wrapper */
-        .input-group {
-            position: relative;
-            margin-bottom: 20px;
-        }
+.a3 {
+  width: 250px;
+  height: 250px;
+  min-width: 0;
+  min-height: 0;
+  background: var(--pink);
+  top: 40%;
+  left: 40%;
+  animation-duration: 19s;
+}
 
-        .key-input {
-            width: 100%;
-            background: rgba(10, 13, 20, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 16px 45px 16px 16px;
-            color: var(--accent-color);
-            font-size: 0.95rem;
-            font-weight: 600;
-            text-align: left;
-            outline: none;
-            transition: all 0.3s ease;
-        }
+/* Particles */
+#particles {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+}
 
-        .key-input:focus {
-            border-color: var(--accent-color);
-            box-shadow: 0 0 15px rgba(0, 242, 254, 0.2);
-        }
+.particle {
+  position: fixed;
+  bottom: -15px;
+  width: var(--size);
+  height: var(--size);
+  left: var(--x);
+  border-radius: 50%;
+  background: var(--color);
+  box-shadow: 0 0 12px var(--color);
+  pointer-events: none;
+  animation: particleRise var(--duration) linear var(--delay) infinite;
+}
 
-        .input-icon {
-            position: absolute;
-            right: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-muted);
-            font-size: 1rem;
-        }
+/* Card */
+.card {
+  position: relative;
+  isolation: isolate;
+  width: min(440px, 100%);
+  padding: 34px 26px 25px;
+  border: 1px solid transparent;
+  border-radius: 27px;
+  background:
+    linear-gradient(145deg, #111326f5, #080a19f7) padding-box,
+    conic-gradient(from var(--angle), #00f5ff, #4d53ff, #ff36c7, #00f5ff) border-box;
+  box-shadow:
+    0 0 45px #00d9ff12,
+    0 0 100px #a855f710,
+    inset 0 0 30px #6d8aff08;
+  backdrop-filter: blur(22px);
+  animation: cardEnter 1s cubic-bezier(.2,.8,.2,1) both,
+             cardFloat 7s ease-in-out 1s infinite;
+  transition: box-shadow .4s, border-radius .4s;
+}
 
-        /* Primary Button */
-        .btn-copy {
-            width: 100%;
-            background: var(--accent-gradient);
-            color: #ffffff;
-            border: none;
-            padding: 16px;
-            border-radius: 12px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            box-shadow: 0 8px 25px rgba(0, 114, 255, 0.35);
-            transition: all 0.3s ease;
-        }
+.card:hover {
+  box-shadow:
+    0 0 45px #00eaff24,
+    0 0 100px #a855f725,
+    inset 0 0 40px #6d8aff0c;
+}
 
-        .btn-copy:hover {
-            opacity: 0.95;
-            box-shadow: 0 12px 30px rgba(0, 198, 255, 0.5);
-            transform: translateY(-1px);
-        }
+/* Rotating border */
+@property --angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
 
-        .btn-copy:active {
-            transform: scale(0.98);
-        }
+.card::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(115deg, #00f5ff09, transparent 40%, #a855f710);
+  pointer-events: none;
+}
 
-        /* Toast Alert */
-        .toast {
-            position: fixed;
-            bottom: -60px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(16, 185, 129, 0.9);
-            color: white;
-            padding: 12px 24px;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 0.875rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(8px);
-            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            opacity: 0;
-        }
+.scan {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 2px;
+  border-radius: 50%;
+  background: linear-gradient(90deg, transparent, var(--cyan), white, var(--purple), transparent);
+  box-shadow: 0 0 18px var(--cyan);
+  animation: scanMove 5s ease-in-out infinite;
+  opacity: .8;
+}
 
-        .toast.show {
-            bottom: 30px;
-            opacity: 1;
-        }
-    </style>
+.top-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  color: #99b6d9;
+  margin-bottom: 25px;
+}
+
+.top-label .live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #42ffbb;
+  box-shadow: 0 0 12px #42ffbb;
+  animation: blink 1.3s infinite;
+}
+
+/* Logo */
+.logo-area {
+  width: 116px;
+  height: 116px;
+  position: relative;
+  margin: 0 auto 22px;
+  display: grid;
+  place-items: center;
+}
+
+.ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1px solid #00f5ff75;
+  box-shadow: 0 0 16px #00f5ff12;
+}
+
+.ring.r1 {
+  animation: spin 7s linear infinite;
+  border-top: 2px solid var(--cyan);
+  border-bottom: 2px solid var(--purple);
+}
+
+.ring.r2 {
+  inset: 9px;
+  border-style: dashed;
+  border-color: #a855f788;
+  animation: spinReverse 13s linear infinite;
+}
+
+.ring.r3 {
+  inset: -7px;
+  border-color: #00f5ff25;
+  animation: ringPulse 3s ease-in-out infinite;
+}
+
+.logo {
+  width: 78px;
+  height: 78px;
+  display: grid;
+  place-items: center;
+  border-radius: 24px;
+  border: 1px solid #00f5ff99;
+  background: linear-gradient(145deg, #152642, #17102f 70%);
+  box-shadow:
+    0 0 30px #00f5ff35,
+    inset 0 0 25px #a855f722;
+  font-size: 43px;
+  font-weight: 1000;
+  font-style: italic;
+  color: white;
+  text-shadow: 0 0 15px var(--cyan);
+  animation: logoGlow 3s ease-in-out infinite;
+}
+
+.spark {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: white;
+  box-shadow: 0 0 10px var(--cyan), 0 0 20px var(--cyan);
+}
+
+.s1 { top: 8px; right: 14px; animation: blink .9s infinite; }
+.s2 { bottom: 8px; left: 15px; animation: blink 1.5s infinite .4s; }
+.s3 { top: 53px; left: -5px; animation: blink 1.1s infinite .2s; }
+
+h1 {
+  text-align: center;
+  font-size: clamp(30px, 8vw, 42px);
+  line-height: 1.12;
+  font-weight: 1000;
+  letter-spacing: 2px;
+  background: linear-gradient(100deg, white 5%, var(--cyan) 35%, #b7a1ff 62%, #ff6adf 85%, white);
+  background-size: 250% auto;
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  animation: textShine 5s linear infinite;
+}
+
+.subtitle {
+  text-align: center;
+  margin-top: 12px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  color: #8995b9;
+}
+
+.separator {
+  width: 100px;
+  height: 2px;
+  margin: 22px auto;
+  background: linear-gradient(90deg, transparent, var(--cyan), var(--purple), transparent);
+  box-shadow: 0 0 14px #00f5ff65;
+  animation: separatorGlow 3s ease-in-out infinite;
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  color: #8fffd1;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  margin-bottom: 27px;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #39ffb2;
+  box-shadow: 0 0 15px #39ffb2;
+  animation: blink 1.4s infinite;
+}
+
+.section-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  color: #c1c9e3;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.6px;
+  margin-bottom: 11px;
+}
+
+.encrypted {
+  font-size: 9px;
+  letter-spacing: 1px;
+  color: #8b7eff;
+}
+
+/* Key field */
+.key-box {
+  position: relative;
+  padding: 17px 15px;
+  overflow: hidden;
+  border-radius: 14px;
+  border: 1px solid #8b5cf766;
+  background: linear-gradient(120deg, #080d1c, #141027, #080d1c);
+  background-size: 200% 100%;
+  animation: boxShimmer 7s linear infinite;
+  transition: border-color .3s, transform .3s, box-shadow .3s;
+}
+
+.key-box:hover {
+  transform: translateY(-2px);
+  border-color: var(--cyan);
+  box-shadow: 0 0 22px #00f5ff18;
+}
+
+.key-box::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 35%;
+  left: -50%;
+  background: linear-gradient(90deg, transparent, #ffffff0d, transparent);
+  transform: skewX(-20deg);
+  animation: shinePass 5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+#keyText {
+  display: block;
+  position: relative;
+  z-index: 1;
+  overflow-wrap: anywhere;
+  font-family: "SFMono-Regular", Consolas, monospace;
+  font-size: 13px;
+  line-height: 1.8;
+  color: #e1f5ff;
+  user-select: all;
+  text-shadow: 0 0 12px #00eaff1c;
+}
+
+.key-note {
+  color: #747f9e;
+  font-size: 10px;
+  margin-top: 10px;
+  line-height: 1.6;
+}
+
+/* Copy button */
+.copy-btn {
+  position: relative;
+  width: 100%;
+  min-height: 55px;
+  margin-top: 19px;
+  overflow: hidden;
+  border: 1px solid #ffffff50;
+  border-radius: 14px;
+  cursor: pointer;
+  color: #060a18;
+  background: linear-gradient(100deg, #00f5ff, #73d9ff 35%, #b9a2ff 70%, #ff77df);
+  background-size: 220% auto;
+  font-size: 13px;
+  font-weight: 1000;
+  letter-spacing: 1.8px;
+  box-shadow: 0 0 24px #00eaff24;
+  transition: transform .25s, box-shadow .3s, filter .3s;
+  animation: buttonGradient 6s linear infinite;
+}
+
+.copy-btn::before {
+  content: "";
+  position: absolute;
+  top: -70%;
+  left: -70%;
+  width: 40%;
+  height: 250%;
+  background: #ffffff80;
+  transform: rotate(25deg);
+  transition: left .6s;
+}
+
+.copy-btn:hover::before {
+  left: 140%;
+}
+
+.copy-btn:hover {
+  transform: translateY(-3px) scale(1.01);
+  box-shadow: 0 0 35px #00eaff45, 0 8px 20px #0005;
+  filter: brightness(1.08);
+}
+
+.copy-btn:active {
+  transform: scale(.97);
+}
+
+.copy-btn.copied {
+  background: linear-gradient(100deg, #39ffb2, #00f5ff);
+}
+
+.message {
+  min-height: 17px;
+  margin-top: 12px;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--cyan);
+  transition: opacity .3s;
+}
+
+.divider {
+  height: 1px;
+  margin: 21px 0 17px;
+  background: linear-gradient(90deg, transparent, #515477, #00f5ff50, transparent);
+}
+
+.footer {
+  text-align: center;
+  color: #727d9d;
+  font-size: 10px;
+  letter-spacing: 1px;
+  line-height: 2;
+}
+
+.footer strong {
+  color: #d2d8f5;
+}
+
+.footer .heart {
+  display: inline-block;
+  color: #ff63dc;
+  animation: heartbeat 1.5s infinite;
+}
+
+.version {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 5px 10px;
+  border: 1px solid #8b5cf744;
+  border-radius: 30px;
+  background: #8b5cf710;
+  color: #b6a8ff;
+  font-size: 9px;
+  letter-spacing: 1px;
+}
+
+/* Animations */
+@keyframes cardEnter {
+  from { opacity: 0; transform: translateY(35px) scale(.94); filter: blur(8px); }
+  to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+}
+
+@keyframes cardFloat {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -5px; }
+}
+
+@keyframes spin {
+  to { rotate: 360deg; }
+}
+
+@keyframes spinReverse {
+  to { rotate: -360deg; }
+}
+
+@keyframes ringPulse {
+  0%, 100% { scale: 1; opacity: .4; }
+  50% { scale: 1.12; opacity: 1; }
+}
+
+@keyframes logoGlow {
+  0%, 100% { box-shadow: 0 0 22px #00f5ff25, inset 0 0 15px #a855f722; }
+  50% { box-shadow: 0 0 42px #00f5ff45, inset 0 0 25px #a855f744; }
+}
+
+@keyframes textShine {
+  to { background-position: 250% center; }
+}
+
+@keyframes separatorGlow {
+  0%, 100% { opacity: .65; filter: hue-rotate(0deg); }
+  50% { opacity: 1; filter: hue-rotate(50deg); }
+}
+
+@keyframes boxShimmer {
+  to { background-position: 200% center; }
+}
+
+@keyframes shinePass {
+  0%, 60% { left: -50%; }
+  100% { left: 150%; }
+}
+
+@keyframes buttonGradient {
+  to { background-position: 220% center; }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .35; }
+}
+
+@keyframes scanMove {
+  0%, 100% { top: 0; opacity: 0; }
+  10% { opacity: .8; }
+  80% { opacity: .8; }
+  95% { top: 100%; opacity: 0; }
+}
+
+@keyframes particleRise {
+  0% { transform: translate3d(0, 0, 0) scale(.4); opacity: 0; }
+  10% { opacity: .8; }
+  80% { opacity: .7; }
+  100% { transform: translate3d(var(--drift), -110vh, 0) scale(1.3); opacity: 0; }
+}
+
+@keyframes backgroundPulse {
+  to { filter: hue-rotate(25deg) brightness(1.15); }
+}
+
+@keyframes gridMove {
+  to { background-position: 42px 42px; }
+}
+
+@keyframes auroraMove {
+  to { transform: translate(14vw, 12vh) scale(1.2); }
+}
+
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  15% { transform: scale(1.3); }
+  30% { transform: scale(1); }
+  45% { transform: scale(1.2); }
+}
+
+@media (max-width: 420px) {
+  .card { padding: 29px 20px 23px; }
+  .logo-area { width: 104px; height: 104px; }
+  .logo { width: 70px; height: 70px; font-size: 39px; }
+  #keyText { font-size: 12px; }
+  .top-label { letter-spacing: 2px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}
+</style>
 </head>
+
 <body>
+<div class="aurora a1"></div>
+<div class="aurora a2"></div>
+<div class="aurora a3"></div>
+<div id="particles"></div>
 
-    <div class="card">
-        <div class="status-badge">
-            <span class="status-dot"></span>
-            SYSTEM ONLINE
-        </div>
-        
-        <h1>RingTaScripts Hub</h1>
-        <p class="subtitle">Nhấp bên dưới để sao chép key xác thực</p>
+<main class="card" id="card">
+  <div class="scan"></div>
 
-        <div class="input-group">
-            <input type="text" id="keyInput" class="key-input" value="RingTaScripsForsakenHubRobloxHack" readonly>
-            <i class="fa-solid fa-key input-icon"></i>
-        </div>
+  <div class="top-label">
+    <span class="live-dot"></span>
+    PULSE SYSTEM ONLINE
+    <span class="live-dot"></span>
+  </div>
 
-        <button class="btn-copy" onclick="copyKey()">
-            <i class="fa-regular fa-copy"></i>
-            <span id="btnText">Sao Chép Key</span>
-        </button>
-    </div>
+  <div class="logo-area">
+    <div class="ring r1"></div>
+    <div class="ring r2"></div>
+    <div class="ring r3"></div>
+    <div class="logo">P</div>
+    <span class="spark s1"></span>
+    <span class="spark s2"></span>
+    <span class="spark s3"></span>
+  </div>
 
-    <!-- Thông báo nổi khi sao chép -->
-    <div id="toast" class="toast">
-        <i class="fa-solid fa-circle-check"></i>
-        <span>Đã sao chép key thành công!</span>
-    </div>
+  <h1>PULSE HUB</h1>
+  <p class="subtitle">NEXT GENERATION KEY SYSTEM</p>
 
-    <script>
-        function copyKey() {
-            const keyInput = document.getElementById("keyInput");
-            const btnText = document.getElementById("btnText");
-            const toast = document.getElementById("toast");
+  <div class="separator"></div>
 
-            // Sao chép nội dung
-            navigator.clipboard.writeText(keyInput.value).then(() => {
-                // Đổi chữ trên nút tạm thời
-                btnText.innerText = "Đã Chép!";
-                
-                // Hiển thị Toast
-                toast.classList.add("show");
+  <div class="status">
+    <span class="status-dot"></span>
+    ACCESS KEY READY
+  </div>
 
-                setTimeout(() => {
-                    btnText.innerText = "Sao Chép Key";
-                    toast.classList.remove("show");
-                }, 2500);
-            });
-        }
-    </script>
+  <div class="section-label">
+    <span>YOUR ACCESS KEY</span>
+    <span class="encrypted">✦ PULSE ACCESS</span>
+  </div>
 
+  <div class="key-box">
+    <code id="keyText">PulsehubKeyKalwpwjwbLapoqhwbwkBamwkwuwo</code>
+  </div>
+
+  <p class="key-note">✧ Keep your key safe and copy it before use.</p>
+
+  <button class="copy-btn" id="copyBtn" type="button">
+    <span id="buttonText">✦ &nbsp; COPY KEY</span>
+  </button>
+
+  <p class="message" id="message" aria-live="polite"></p>
+
+  <div class="divider"></div>
+
+  <div class="footer">
+    CRAFTED FOR THE NEXT LEVEL<br>
+    POWERED BY <strong>PULSE HUB</strong>
+    <br>
+    MADE WITH <span class="heart">♥</span> FOR THE COMMUNITY
+    <br>
+    <span class="version">PULSE UI · V2.0</span>
+  </div>
+</main>
+
+<script>
+const KEY = "PulsehubKeyKalwpwjwbLapoqhwbwkBamwkwuwo";
+const copyBtn = document.getElementById("copyBtn");
+const buttonText = document.getElementById("buttonText");
+const message = document.getElementById("message");
+const card = document.getElementById("card");
+const particles = document.getElementById("particles");
+
+let resetTimer;
+
+function createParticles() {
+  const fragment = document.createDocumentFragment();
+
+  for (let i = 0; i < 42; i++) {
+    const p = document.createElement("span");
+    p.className = "particle";
+
+    const hue = [185, 215, 260, 300][i % 4];
+
+    p.style.setProperty("--x", Math.random() * 100 + "%");
+    p.style.setProperty("--size", (2 + Math.random() * 3) + "px");
+    p.style.setProperty("--duration", (8 + Math.random() * 13) + "s");
+    p.style.setProperty("--delay", (-Math.random() * 18) + "s");
+    p.style.setProperty("--drift", (-60 + Math.random() * 120) + "px");
+    p.style.setProperty("--color", `hsl(${hue} 100% 72%)`);
+
+    fragment.appendChild(p);
+  }
+
+  particles.appendChild(fragment);
+}
+
+createParticles();
+
+async function copyKey() {
+  try {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(KEY);
+    } else {
+      const area = document.createElement("textarea");
+      area.value = KEY;
+      area.style.position = "fixed";
+      area.style.opacity = "0";
+      area.style.pointerEvents = "none";
+      document.body.appendChild(area);
+      area.focus();
+      area.select();
+
+      const success = document.execCommand("copy");
+      area.remove();
+
+      if (!success) throw new Error("Copy failed");
+    }
+
+    copyBtn.classList.add("copied");
+    buttonText.textContent = "✓  KEY COPIED SUCCESSFULLY!";
+    message.textContent = "✦ Your key has been copied to clipboard!";
+
+    if (navigator.vibrate) navigator.vibrate(35);
+
+    clearTimeout(resetTimer);
+    resetTimer = setTimeout(() => {
+      copyBtn.classList.remove("copied");
+      buttonText.textContent = "✦  COPY KEY";
+      message.textContent = "";
+    }, 2500);
+
+  } catch (error) {
+    message.textContent = "Select the key above and copy it manually.";
+  }
+}
+
+copyBtn.addEventListener("click", copyKey);
+
+/* Subtle 3D tilt on mouse devices */
+if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+  card.addEventListener("pointermove", (event) => {
+    const rect = card.getBoundingClientRect();
+    const x = (event.clientX - rect.left) / rect.width - 0.5;
+    const y = (event.clientY - rect.top) / rect.height - 0.5;
+
+    card.style.transform =
+      `perspective(1000px) rotateX(${-y * 3}deg) rotateY(${x * 3}deg)`;
+  });
+
+  card.addEventListener("pointerleave", () => {
+    card.style.transform = "";
+  });
+}
+
+/* Small sparkle burst when the card is clicked */
+card.addEventListener("click", (event) => {
+  if (event.target.closest("button")) return;
+
+  for (let i = 0; i < 7; i++) {
+    const spark = document.createElement("span");
+    spark.textContent = "✦";
+    spark.style.cssText = `
+      position:fixed;
+      left:${event.clientX}px;
+      top:${event.clientY}px;
+      z-index:99;
+      pointer-events:none;
+      color:${i % 2 ? "#00f5ff" : "#c4a4ff"};
+      font-size:${10 + Math.random() * 13}px;
+      animation:sparkleBurst .7s ease-out forwards;
+    `;
+
+    const angle = Math.PI * 2 * i / 7;
+    spark.style.setProperty("--dx", `${Math.cos(angle) * 65}px`);
+    spark.style.setProperty("--dy", `${Math.sin(angle) * 65}px`);
+    document.body.appendChild(spark);
+    spark.addEventListener("animationend", () => spark.remove());
+  }
+});
+
+const sparkleStyle = document.createElement("style");
+sparkleStyle.textContent = `
+@keyframes sparkleBurst {
+  from { transform:translate(-50%,-50%) scale(.3); opacity:1; }
+  to {
+    transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy))) scale(1.4);
+    opacity:0;
+  }
+}`;
+document.head.appendChild(sparkleStyle);
+</script>
 </body>
 </html>
